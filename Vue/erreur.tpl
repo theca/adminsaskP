@@ -1,0 +1,1 @@
+<p>{$donnees.msgErreur}</p>
