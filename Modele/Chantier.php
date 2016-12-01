@@ -14,7 +14,11 @@ class Chantier extends Modele {
      * @return PDOStatement La liste des billets
      */
     public function getChantiers($ID_membres) {
-        $sql = 'SELECT * From Chantier, Client, Service, Decision WHERE Chantier.FK_client=Client.ID_client and Chantier.FK_service=Service.ID_service and Chantier.FK_decision=Decision.ID_decision and Chantier.FK_membres= ? ORDER BY Date_de_remise DESC';
+        $sql = 'SELECT * From Chantier, Client, Service, Decision WHERE Chantier.FK_client=Client.ID_client and Chantier.FK_service=Service.ID_service and '
+                . 'Chantier.FK_decision=Decision.ID_decision and Chantier.FK_Decision_Lot_01=Decision.ID_decision'
+                . ' and Chantier.FK_Decision_Lot_02=Decision.ID_decision and '
+                . 'Chantier.FK_Decision_Lot_03=Decision.ID_decision and Chantier.FK_membres= ? '
+                . 'ORDER BY Date_de_remise DESC';
         $chantiers = $this->executerRequete($sql, array($ID_membres));
         return $chantiers;
     }
@@ -26,7 +30,12 @@ class Chantier extends Modele {
      * @throws Exception Si l'identifiant du billet est inconnu
      */
     public function getChantier($idChantier) {
-        $sql = 'SELECT * FROM Chantier, Client, Service, Decision WHERE ID_chantier= ? and Chantier.FK_client=Client.ID_client and Chantier.FK_service=Service.ID_service and Chantier.FK_decision=Decision.ID_decision';
+        $sql = 'SELECT * FROM Chantier, Client, Service, Decision, Decision_Lot_01, Decision_Lot_02, Decision_Lot_03 WHERE ID_chantier= ? '
+                . 'and Chantier.FK_client=Client.ID_client and Chantier.FK_service=Service.ID_service '
+                . 'and Chantier.FK_decision=Decision.ID_decision '
+                . 'and Chantier.FK_Decision_Lot_01=Decision_Lot_01.ID_decision_01'
+                . ' and Chantier.FK_Decision_Lot_02=Decision_Lot_02.ID_decision_02 and '
+                . 'Chantier.FK_Decision_Lot_03=Decision_Lot_03.ID_decision_03';
         $chantier = $this->executerRequete($sql, array($idChantier,));
         if ($chantier->rowCount() > 0)
             return $chantier->fetch(PDO::FETCH_ASSOC);  // Accès à la première ligne de résultat

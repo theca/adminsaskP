@@ -105,10 +105,7 @@ $(document).ready(function(){
                 'name': colonne,
                 'value': $('#'+value).text(),
             });
-            if(colonne == 'Prix_lot_01'){
-                $(this).parent().prev().remove();
-                
-            }
+            
             $(this).prev().remove();
             $(this).parent().append(input);
             $(this).parent().append('<a href="" id="'+colonne+'" class="glyphicon glyphicon-ok validEdit"></a>');
@@ -125,7 +122,7 @@ $(document).ready(function(){
                             <option value="2">Accepter</option>\n\
                             <option value="3">Rejeter</option>\n\
                         </select>'
-            $(this).parent().prev().remove();
+            $(this).prev().prev().remove();
             $(this).prev().remove();
             $(this).parent().append(input);
             $(this).parent().append('<a href="" id="'+colonne+'" class="glyphicon glyphicon-ok validEdit"></a>');
@@ -134,9 +131,11 @@ $(document).ready(function(){
             return false;
         });
         
-        $(document).on('click','.validEdit',function(){              
+        $(document).on('click','.validEdit',function(event){ 
+            event.preventDefault();
             var colonne = $(this).attr("id");
-            var id = $('.page-header').attr("id");
+            var id_lot=colonne+'Value';            
+            var id = $('.page-header').attr("id");            
             var donnee = $(this).prev().val();
             var displayAjax = $(this).parent();
             var requete = $.ajax({
@@ -147,17 +146,56 @@ $(document).ready(function(){
             });
             requete.done(function( html ) {
                 displayAjax.html(html);
+                
+                if(colonne)
                 $( "#"+colonne+" use" ).attr( "xlink:href", function( i, val ) {
                     var loc2 = $(location).attr('href');
                     loc2 =loc.split('#');
                     loc2 = loc2[0];
                     return loc2 + val;
-                  });
+                  });         
+              
             });
-            return false;
+            var id_lotb = $(this).parent().next();            
+            //console.log(id_lotb);
+            displayOnePrix(donnee,id_lotb);
+            
         });
         
+        /* Start Edit TTC prive and TVA price */
+        function prixTTC(prixValue, id_TTC) {
+                        
+            prixHT = prixValue.substring(0,prixValue.indexOf('€'));
+            var prixTTC = prixHT*1.20;
+            id_TTC.text("Prix TTC : "+prixTTC+" €");
+        }
+        function prixTVA(prixValue, id_TVA) {
+            
+            prixHT = prixValue.substring(0,prixValue.indexOf('€'));
+            var prixTVA = prixHT*0.20;            
+            id_TVA.text("TVA : "+prixTVA+" €"); 
+        }
+        function displayPrix(){
+            for (var i = 0; i < 3; i++) {
+                var id_TTC = $('#Prix_lot_0'+i+'Value').parent().next().next();
+                var id_TVA = $('#Prix_lot_0'+i+'Value').parent().next();
+                var prixValue = $('#Prix_lot_0'+i+'Value').text();
+                prixTTC(prixValue,id_TTC);
+                prixTVA(prixValue,id_TVA);
+            }
+        }
+        function displayOnePrix(prixValue,id_lotb){
+            id_TVA = id_lotb;
+            id_TTC = id_lotb.next();
+            var prixValue = prixValue;
+            prixTTC(prixValue,id_TTC);
+            prixTVA(prixValue,id_TVA);
+            
+        }
+        displayPrix();
         
-
+         /* END edit TTC prive and TVA price */
         
+        
+          
 });

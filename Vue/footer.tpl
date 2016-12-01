@@ -1,13 +1,11 @@
 
         <script src="web/js/lumino.glyphs.js"></script>
-        <script src="web/js/jquery-3.1.1.min.js"></script>
-        
+        <script src="web/js/jquery-3.1.1.min.js"></script>        
 	<script src="web/js/bootstrap.min.js"></script>
 	<script src="web/js/chart.min.js"></script>
-	<script src="web/js/easypiechart.js"></script>
-	<script src="web/js/easypiechart-data.js"></script>
+	
 	<script src="web/js/bootstrap-datepicker.js"></script>
-        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script> 
+        <script src="web/js/datatables.min.js"></script> 
         <script src="web/js/client.js"></script>
         <script src="web/js/nouveauChantier.js"></script>
         <script src="web/js/chosen.jquery.min.js"></script>       

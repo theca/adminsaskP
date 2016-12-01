@@ -40,15 +40,22 @@
                                 <label>Lot n°{$donnees.chantier.Numero_lot_01} : {$donnees.chantier.Lot_01}</label>
                                 <p name="Prix_lot_01">
                                     <span>Prix HT :</span>
-                                    <span class="Prix_lot_01">
-                                        <span id="Prix_lot_01Value">{$donnees.chantier.Prix_lot_01}</span>
+                                    
+                                        <span id="Prix_lot_01Value">{$donnees.chantier.Prix_lot_01} €</span>
                                         <span id="Prix_lot_01" class="editChantierInput"  title="Edit">
                                         <svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"/></svg>
                                         </span>
-                                    </span>
+                                   
                                 </p>
-                                <p >TVA : {$donnees.chantier.Prix_lot_02}</p>
-                                <p>Prix TTC : {$donnees.chantier.Prix_lot_02}</p>
+                                <p >TVA : </p>
+                                <p>Prix TTC : </p>
+                                <p>Décision du client pour lot 01</p>
+                                <span  name="decision_01" >
+                                    <span id="FK_Decision_Lot_01Value">{$donnees.chantier.decision_01}</span>
+                                    <span id="FK_Decision_Lot_01" class="editChantierSelect"  title="decision_01">
+                                        <svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"/></svg>
+                                    </span>
+                                </span>
                             </div>
                         {/if}
                         {if isset($donnees.chantier.Lot_02) && $donnees.chantier.Lot_02 != NULL}
@@ -56,15 +63,22 @@
                                 <label>Lot n°{$donnees.chantier.Numero_lot_02} : {$donnees.chantier.Lot_02}</label>
                                 <p name="Prix_lot_02">
                                     <span>Prix HT :</span>
-                                    <span class="Prix_lot_02">
-                                        <span id="Prix_lot_02Value">{$donnees.chantier.Prix_lot_02}</span>
+                                    
+                                        <span id="Prix_lot_02Value">{$donnees.chantier.Prix_lot_02}€</span>
                                         <span id="Prix_lot_02" class="editChantierInput"  title="Edit">
                                         <svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"/></svg>
                                         </span>
+                                    
+                                </p>
+                                <p>TVA : </p>
+                                <p>Prix TTC : </p>
+                                <p>Décision du client pour lot 02</p>
+                                <p  name="decision_02" >
+                                    <span id="FK_Decision_Lot_02Value">{$donnees.chantier.decision_02}</span>
+                                    <span id="FK_Decision_Lot_02" class="editChantierSelect"  title="decision_02">
+                                        <svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"/></svg>
                                     </span>
                                 </p>
-                                <p>TVA : {$donnees.chantier.Prix_lot_02}</p>
-                                <p>Prix TTC : {$donnees.chantier.Prix_lot_02}</p>
                             </div>
                         {/if}
                         
@@ -105,7 +119,7 @@
                                 {$donnees.chantier.Ville}
                             </adress>
                         </div>
-                            <div class="form-group">
+                        <div class="form-group">
                             <label>Décision du client</label>
                             <p  name="decision">
                                 <span id="decisionValue">{$donnees.chantier.decision}</span>
@@ -131,10 +145,6 @@
             $(document).on('click','.exitEdit',function(){
                     var loc2 = $(location).attr('href');                
                     var colonne = $(this).attr("id");
-                    if(colonne == 'Prix_lot_01'){                    
-                        $(this).parent().parent().append("<span class='Prix_lot_01Label'>Prix HT :</span>");
-                        $(".Prix_lot_01").before($(".Prix_lot_01Label"));
-                    }
                     switch(colonne)
                     {
                         case 'Nom_chantier':
@@ -149,7 +159,7 @@
                             $(this).parent().append("<span id='"+colonne+"Value'>{/literal}{$donnees.chantier.Prix_lot_02}{literal}</span>");
                             $(this).parent().append("<span id='"+colonne+"' class='editChantierInput'  title='Edit'><svg class='glyph stroked pencil'><use xlink:href='"+loc2+"#stroked-pencil'/></svg></span>");
                         break;                        
-                        case 'decision':
+                        case 'FK_decision':
                             $(this).parent().append("<span id='"+colonne+"Value'>{/literal}{$donnees.chantier.decision}{literal}</span>");
                             $(this).parent().append("<span id='"+colonne+"' class='editChantierSelect'  title='Edit'><svg class='glyph stroked pencil'><use xlink:href='"+loc2+"#stroked-pencil'/></svg></span>");
                         break;
